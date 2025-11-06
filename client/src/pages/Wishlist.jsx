@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import api from '../utils/api';
 import { setWishlist, removeFromWishlist } from '../slices/wishlistSlice';
-import ProductCard from '../components/ProductCard';
+import ProductCard from '../components/Header';
 
 const Wishlist = () => {
   const dispatch = useDispatch();
