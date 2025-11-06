@@ -1,18 +1,33 @@
-import { configureStore } from '@reduxjs/toolkit';
-import authReducer from '../slices/authSlice';
-import productReducer from '../slices/productSlice';
-import cartReducer from '../slices/cartSlice';
-import wishlistReducer from '../slices/wishlistSlice';
-import orderReducer from '../slices/orderSlice';
+import axios from 'axios';
 
-const store = configureStore({
-  reducer: {
-    auth: authReducer,
-    products: productReducer,
-    cart: cartReducer,
-    wishlist: wishlistReducer,
-    orders: orderReducer,
-  },
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  timeout: 10000,
 });
 
-export default store;
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+api.interceptors.response.use(
+  (response) => response.data,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error.response?.data || error);
+  }
+);
+
+export default api;
