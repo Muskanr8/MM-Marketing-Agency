@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from '../utils/api';
 import { setProducts, setFilters } from '../slices/productSlice';
-import ProductCard from '../components/Header';
+import ProductCard from '../components/ProductCard';
 
 const Products = () => {
   const dispatch = useDispatch();

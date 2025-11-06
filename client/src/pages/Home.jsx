@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import api from '../utils/api';
 import { setProducts } from '../slices/productSlice';
-import ProductCard from '../components/Header';
+import ProductCard from '../components/ProductCard';
 
 const Home = () => {
   const dispatch = useDispatch();
